@@ -1,4 +1,4 @@
-type CreateBookRequest = {
+type CreateOrUpdateBookRequest = {
     title: string
     author: string
     publishedYear: number
@@ -7,5 +7,5 @@ type CreateBookRequest = {
 }
 
 export {
-    CreateBookRequest
+    CreateOrUpdateBookRequest
 }

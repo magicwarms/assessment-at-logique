@@ -1,5 +1,6 @@
 const CACHE_KEY = {
     BOOK: 'book:',
+    PAGE: 'page:',
 };
 
 
