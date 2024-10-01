@@ -1,4 +1,4 @@
-import { Repository, EntityTarget, FindOptionsWhere, FindManyOptions } from 'typeorm';
+import { Repository, EntityTarget, FindManyOptions } from 'typeorm';
 import AppDataSource from '../database/ormconfig';
 import { IRepository } from './IRepository';
 import { injectable, unmanaged } from 'inversify';
@@ -22,14 +22,6 @@ export class BaseRepository<T extends object> implements IRepository<T> {
 
     async getSingleById(id: string): Promise<T | null> {
         return this.repository.findOneBy({ id } as T);
-    }
-
-    async getSingleByConditions(conditions: FindOptionsWhere<T>): Promise<T | null> {
-        return this.repository.findOne({ where: conditions });
-    }
-
-    async countByConditions(conditions: FindOptionsWhere<T>[]): Promise<number> {
-        return this.repository.countBy(conditions);
     }
 
     async getAll(): Promise<T[]> {
