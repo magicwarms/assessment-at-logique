@@ -6,9 +6,9 @@ const options = {
     definition: {
         openapi: '3.0.0',
         info: {
-            title: 'Geniverse API',
+            title: 'Book Management API',
             version: '1.0.0',
-            description: 'API documentation for Geniverse',
+            description: 'API documentation for Book Management',
         },
         servers: [
             {
