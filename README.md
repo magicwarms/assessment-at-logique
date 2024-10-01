@@ -40,7 +40,7 @@ docker compose up
 
 ## API Documentation
 
-You can find the API documentation at `http://localhost:9000`
+You can find the API documentation at `http://localhost:9000` or on Postman `https://documenter.getpostman.com/view/1357220/2sAXxJiF2g`
 
 ## License
 
