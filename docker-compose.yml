@@ -28,6 +28,7 @@ services:
     restart: on-failure
     environment:
       - DB_HOST=postgresql-assessment-db
+      - REDIS_HOST=redis-assessment-cache
       - NODE_ENV=production
   
   redis-assessment-cache:
@@ -45,6 +46,8 @@ services:
     volumes:
       - ./data:/var/lib/redis
     command: ["redis-server", "--appendonly", "yes"]
+    networks:
+      - books-network
 
 networks:
   books-network:

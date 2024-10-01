@@ -142,6 +142,11 @@ const bookRoutes = (bookService: IBookService) => {
             const page = parseInt(req.query.page as string) || 1;
             const limit = parseInt(req.query.limit as string) || 10;
 
+            if (!searchStr) {
+                const books = await bookService.getAllBooks();
+                return res.status(200).json(books);
+            }
+
             const [books, total] = await bookService.getAllBooksByCondition(searchStr, page, limit);
             return res.status(200).json({
                 page,
@@ -149,39 +154,6 @@ const bookRoutes = (bookService: IBookService) => {
                 totalBooks: total,
                 books
             });
-        } catch (error) {
-            if (error instanceof Error) {
-                logger.error(error.message);
-                return res.status(500).json({ message: error.message });
-            } else {
-                logger.error("Unknown error occurred");
-                return res.status(500).json({ message: 'Unknown error occurred' });
-            }
-        }
-    });
-
-    /**
-     * @openapi
-     * /api/books:
-     *   get:
-     *     summary: Get all books
-     *     tags: [Books]
-     *     responses:
-     *       200:
-     *         description: The list of books
-     *         content:
-     *           application/json:
-     *             schema:
-     *               type: array
-     *             items:
-     *               $ref: '#/components/schemas/Book'
-     *       500:
-     *         description: Some server error
-     */
-    router.get('/', async (req: Request, res: Response) => {
-        try {
-            const books = await bookService.getAllBooks();
-            return res.status(200).json(books);
         } catch (error) {
             if (error instanceof Error) {
                 logger.error(error.message);
