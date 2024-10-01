@@ -1,0 +1,51 @@
+services:
+  postgresql-assessment-db:
+    build:
+      context: ./db
+    restart: unless-stopped
+    container_name: postgresql-assessment-db
+    environment:
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: booksdb
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./pg_data:/var/lib/postgres
+    tty: true
+    networks:
+      - books-network
+
+  books-assessment-app-be:
+    container_name: books-assessment-app-be
+    build: .
+    ports:
+      - "9000:9000"
+    depends_on:
+      - postgresql-assessment-db
+    networks:
+      - books-network
+    restart: on-failure
+    environment:
+      - DB_HOST=postgresql-assessment-db
+      - NODE_ENV=production
+  
+  redis-assessment-cache:
+    image: redis:latest
+    restart: always
+    depends_on:
+      - postgresql-assessment-db
+    container_name: redis-assessment-cache
+    environment:
+      REDIS_PASSWORD: 7MFqhD2ACA88CEZB3ZxfcF3y2SqFeP
+      REDIS_PORT: 6379
+      REDIS_DATABASES: 16
+    ports:
+      - "6379:6379"
+    volumes:
+      - ./data:/var/lib/redis
+    command: ["redis-server", "--appendonly", "yes"]
+
+networks:
+  books-network:
+    driver: bridge

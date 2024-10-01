@@ -1,6 +1,8 @@
 import { DataSource } from 'typeorm';
 import { Config } from "../config";
 
+const isProd = Config.NODE_ENV === 'production';
+
 const AppDataSource = new DataSource({
     type: 'postgres',
     host: Config.DB_HOST,
@@ -10,8 +12,8 @@ const AppDataSource = new DataSource({
     database: Config.DB_NAME,
     synchronize: false,
     logging: "all",
-    entities: [__dirname + '/../models/*.ts'],
-    migrations: [__dirname + '/migrations/*.ts'],
+    entities: [isProd ? __dirname + '/../models/*.js' : __dirname + '/../models/*.ts'],
+    migrations: [isProd ? __dirname + '/migrations/*.js' : __dirname + '/migrations/*.ts'],
 });
 
 export default AppDataSource;
