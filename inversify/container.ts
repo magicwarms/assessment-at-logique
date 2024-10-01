@@ -1,7 +1,7 @@
 import { Container } from 'inversify';
 import TYPES from './types';
-import { IContactService } from '../services/bookService';
-import { ContactService } from '../services/bookService';
+import { IBookService } from '../services/bookService';
+import { BookService } from '../services/bookService';
 import { buildProviderModule } from 'inversify-binding-decorators';
 import { IRepository } from '../repositories/IRepository';
 import { Book } from '../models/Book';
@@ -13,7 +13,7 @@ const container = new Container();
 container.bind<IRepository<Book>>(TYPES.BookRepository).to(BookRepository).inTransientScope();
 
 // Services
-container.bind<IContactService>(TYPES.BookService).to(ContactService).inTransientScope();
+container.bind<IBookService>(TYPES.BookService).to(BookService).inTransientScope();
 
 container.load(buildProviderModule());
 

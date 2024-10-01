@@ -8,13 +8,11 @@ import morganMiddleware from './middlewares/morganMiddleware';
 import logger from './logger';
 import { Config } from "./config";
 
-import contactRoutes from './routes/contactRoutes';
+import bookRoutes from './routes/bookRoutes';
 
 import container from './inversify/container';
 import TYPES from './inversify/types';
 import { logPayloadMiddleware } from './middlewares/logPayloadMiddleware';
-
-
 
 // Connect to the database
 connectDB();
@@ -29,8 +27,7 @@ const main = async () => {
     app.use(morganMiddleware);
     app.use(logPayloadMiddleware);
 
-    app.use('/api/contacts', contactRoutes(container.get(TYPES.ContactService)));
-
+    app.use('/api/books', bookRoutes(container.get(TYPES.BookService)));
 
     // Setup Swagger
     if (Config.ENVIRONMENT !== 'production') {

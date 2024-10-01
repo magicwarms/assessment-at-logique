@@ -6,11 +6,11 @@ import TYPES from '../inversify/types';
 import { BookDTO } from '../dto/bookDTO';
 
 export interface IBookService {
-    createBook(contactMessage: BookDTO): Promise<Book>;
+    createBook(book: BookDTO): Promise<Book>;
 }
 
 @injectable()
-export class ContactService implements IBookService {
+export class BookService implements IBookService {
     private bookRepository: IRepository<Book>;
 
     constructor(
@@ -18,7 +18,6 @@ export class ContactService implements IBookService {
     ) {
         this.bookRepository = bookRepository;
     }
-
 
     async createBook(book: BookDTO): Promise<Book> {
         const { title, author, publishedYear, genres, stock } = book
@@ -31,7 +30,7 @@ export class ContactService implements IBookService {
         bookData.genres = genres;
         bookData.stock = stock;
 
-        const createdBook = this.bookRepository.create(bookData);
+        const createdBook = await this.bookRepository.create(bookData);
 
         return createdBook;
 

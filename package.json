@@ -6,7 +6,7 @@
   "scripts": {
     "build": "tsc",
     "start": "node dist/server.js",
-    "dev": "npm run lint && nodemon --verbose --watch '**/*.ts' --exec 'node --inspect=0.0.0.0:9229 -r ts-node/register' server.ts --legacy-watch",
+    "dev": "npm run lint && nodemon --verbose --watch \"**/*.ts\" --exec \"node --inspect=0.0.0.0:9229 -r ts-node/register\" server.ts --legacy-watch",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
